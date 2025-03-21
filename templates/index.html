@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mikayla's Library</title>
+    <style>
+
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            background-color: #f8e1e9;
+            color: #4a4a4a;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .title-container {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .book-list-container,
+        .fav-books-container {
+            background-color: #fff;
+            padding: 10px;  
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 45%; 
+            margin-top: 20px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #d34b6c;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        input[type="date"],
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #d34b6c;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="date"]:focus,
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #ff6b81;
+        }
+
+        button {
+            font-family: 'Josefin Sans', sans-serif;
+            background-color: #d34b6c;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #ff6b81;
+        }
+
+        .book-list {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 2px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: 30px auto;
+            text-align: left;
+        }
+
+        .favs-list {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 2px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: 30px auto;
+            text-align: left;
+        }
+
+        .book-list h3 {
+            font-size: 1.5rem;
+            color: #d34b6c;
+            margin-bottom: 15px;
+        }
+
+        .favs-list h4 {
+            font-size: 1.5rem;
+            color: #d34b6c;
+            margin-bottom: 15px;
+        }
+
+        .book-item {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .book-item:last-child {
+            border-bottom: none;
+        }
+
+        .book-item span {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="title-container">
+        <h2>Mikayla's Library</h2>
+    </div>
+
+    <div class="container">
+        <form action="/insert" method="POST">
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required><br><br>
+
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required><br><br>
+
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" name="rating" step="1" min="1" max="5" required><br><br>
+
+            <label for="book_name">Book Name:</label>
+            <input type="text" id="book_name" name="book_name" required><br><br>
+
+            <button type="submit">Insert Book</button>
+        </form>
+
+        <div class="book-list-container">
+            <div class="book-list">
+                <h3>Most Recent Books:</h3>
+                {{range .Books}}
+                    <div class="book-item">
+                        <strong>{{.BookName}}</strong>
+                        <span><strong>Start Date:</strong> {{.StartDate}}</span>
+                        <span><strong>End Date:</strong> {{.EndDate}}</span>
+                        <span><strong>Rating:</strong> {{.Stars}}</span>
+                    </div>
+                {{else}}
+                    <p>No books found.</p>
+                {{end}}
+            </div>
+        </div>
+
+        <div class="fav-books-container">
+            <div class="favs-list">
+                <h4>My Favorite Books:</h4>
+                {{range .FavBooks}}
+                    <div class="book-item">
+                        <strong>{{.BookName}}</strong>
+                        <span><strong>Start Date:</strong> {{.StartDate}}</span>
+                        <span><strong>End Date:</strong> {{.EndDate}}</span>
+                        <span><strong>Rating:</strong> {{.Stars}}</span>
+                    </div>
+                {{else}}
+                    <p>No books found.</p>
+                {{end}}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
